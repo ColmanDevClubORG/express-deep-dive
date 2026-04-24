@@ -2,8 +2,8 @@ import express, { Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { specs } from './config/swagger';
 import exampleRoutes from './routes/example.routes';
-
 import { loggerMiddleware } from './middlewares/logger.middleware';
+import { errorMiddleware } from './middlewares/error.middleware';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,6 +22,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/api/examples', exampleRoutes);
+
+app.use(errorMiddleware);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
