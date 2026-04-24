@@ -27,3 +27,16 @@ export const getExampleById = (
     next(error);
   }
 };
+
+export const createExample = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const newExample = exampleService.create(req.body);
+    res.status(201).json(newExample);
+  } catch (error) {
+    next(error);
+  }
+};

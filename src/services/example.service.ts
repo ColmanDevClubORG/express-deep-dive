@@ -13,7 +13,18 @@ const getById = (id: number): Example => {
   return example;
 };
 
+const create = (data: { name: string; description: string }): Example => {
+  const newExample: Example = {
+    id: examples.length + 1,
+    ...data,
+    timestamp: new Date().toISOString(),
+  };
+  examples.push(newExample);
+  return newExample;
+};
+
 export const exampleService = {
   getAll,
   getById,
+  create,
 };
