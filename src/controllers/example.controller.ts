@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { examples } from '../models/example.model';
-import { AppError } from '../utils/AppError';
+import { exampleService } from '../services/example.service';
 
 export const getExamples = (
   req: Request,
@@ -8,6 +7,7 @@ export const getExamples = (
   next: NextFunction,
 ) => {
   try {
+    const examples = exampleService.getAll();
     res.json(examples);
   } catch (error) {
     next(error);
@@ -21,12 +21,7 @@ export const getExampleById = (
 ) => {
   try {
     const id = parseInt(req.params.id as string);
-    const example = examples.find((ex) => ex.id === id);
-
-    if (!example) {
-      throw new AppError('Example not found', 404);
-    }
-
+    const example = exampleService.getById(id);
     res.json(example);
   } catch (error) {
     next(error);
